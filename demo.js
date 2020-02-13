@@ -1,35 +1,52 @@
 // balanced paranthesis ////////////////////
 
-function getMin(s) {
-  let legend = {'(': ')'}
-  let stack = []
-  let insertions = 0
-  let result = s
+//************** FIRST DRAFT ****************//
 
-  if (s[0] === ')') {
-    s = '(' + s
-    insertions += 1
-  }
+// function getMin(string) {
+//   let legend = {'(': ')'}
+//   let stack = []
+//   let insertions = 0
+//   let result = string
 
-  if (s[s.length - 1] === '(') {
-    s = s + ')'
-    insertions += 1
-  }
+//   if (string[0] === ')') {
+//     string = '(' + string
+//     insertions += 1
+//   }
 
-  for (let i = 0; i < s.length; i++) {
-    if (legend[s[i]]) {
-      stack.push(s[i])
-    } else if (legend[stack.pop()] !== s[i]) {
-      result = s.slice(0, s[i]) + legend[stack.pop()] + s.slice(s[i] + 1, s.length)
-      insertions += 1
+//   if (string[string.length - 1] === '(') {
+//     string = string + ')'
+//     insertions += 1
+//   }
+
+//   for (let i = 0; i < string.length; i++) {
+//     if (legend[string[i]]) {
+//       stack.push(string[i])
+//     } else if (legend[stack.pop()] !== string[i]) {
+//       result = string.slice(0, string[i]) + legend[stack.pop()] + string.slice(string[i] + 1, string.length)
+//       console.log(result)
+//       insertions += 1
+//     }
+//   }
+//   console.log(insertions)
+//   return insertions
+// }
+
+//************** SECOND DRAFT ****************//
+
+function getMin(string) {
+  let closed = 0
+  let open = 0
+
+  for (let i = 0; i < string.length; i++) {
+    if (string[i] === '(') closed++
+    if (string[i] === ')') {
+      closed > 0 ? closed-- : open++
     }
   }
-  console.log(s)
-  console.log(insertions)
-  return insertions
+  return closed + open
 }
 
-// getMin('((()))(')
+// getMin('()(())(((')
 
 
 
@@ -114,3 +131,15 @@ function superStack(operations) {
 
 // let input = ['push 4', 'pop', 'push 3', 'push 5', 'push 2', 'inc 3 1', 'pop', 'push 1', 'inc 2 2', 'push 4', 'pop', 'pop']
 // superStack(input)
+
+
+
+// sock merchant (find all pairs) ////////////////////
+
+// let n = 9
+// let ar = [10, 20, 20, 10, 10, 30, 50, 10, 20]
+
+// function sockMerchant(n, ar) {
+
+
+// }
