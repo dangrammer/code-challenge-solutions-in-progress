@@ -1,6 +1,6 @@
-// balanced paranthesis ////////////////////
+// balanced paranthesis ////////////////////////////////////////
 
-//************** FIRST DRAFT ****************//
+// *FIRST DRAFT* //
 
 // function getMin(string) {
 //   let legend = {'(': ')'}
@@ -27,11 +27,11 @@
 //       insertions += 1
 //     }
 //   }
-//   console.log(insertions)
+//   console.log(result, insertions)
 //   return insertions
 // }
 
-//************** SECOND DRAFT ****************//
+// *SECOND DRAFT* //
 
 function getMin(string) {
   let closed = 0
@@ -43,6 +43,7 @@ function getMin(string) {
       closed > 0 ? closed-- : open++
     }
   }
+
   return closed + open
 }
 
@@ -50,41 +51,58 @@ function getMin(string) {
 
 
 
-// counting pairs ////////////////////
+// counting pairs ////////////////////////////////////////
 
-function countPairs(numbers, k) {
-  let result = []
+// *FIRST DRAFT* //
 
-  if (numbers.length < 2 || k < 0) {
-    console.log('ERROR: Invalid input')
-    return
-  }
+// function countPairs(numbers, k) {
+//   let result = []
 
-  for (let i = 0; i < numbers.length; i++) {
-    if (numbers[i] >= 0) {
-      let nums = numbers
-      nums.splice(numbers.indexOf(numbers[i]), 1)
-      for (let j = 0; j < nums.length; j++) {
-        if (nums[j] >= 0) {
-          if (numbers[i] + k === nums[j]) {
-            if (!result.includes(`${numbers[i]}, ${nums[j]}`)) {
-              result.push(`${numbers[i]}, ${nums[j]}`)
-            }
-          }
-        } 
-      }
-    }
-  }
-  console.log(result)
-  console.log(result.length)
-  return result.length
-}
+//   if (numbers.length < 2 || k < 0) {
+//     console.log('ERROR: Invalid input')
+//     return
+//   }
+
+//   for (let i = 0; i < numbers.length; i++) {
+//     if (numbers[i] >= 0) {
+//       let nums = numbers
+//       nums.splice(numbers.indexOf(numbers[i]), 1)
+//       for (let j = 0; j < nums.length; j++) {
+//         if (nums[j] >= 0) {
+//           if (numbers[i] + k === nums[j]) {
+//             if (!result.includes(`${numbers[i]}, ${nums[j]}`)) {
+//               result.push(`${numbers[i]}, ${nums[j]}`)
+//             }
+//           }
+//         } 
+//       }
+//     }
+//   }
+
+//   return result.length
+// }
 
 // countPairs([2, 5, 5, 2], 3)
 
+// *SECOND DRAFT* //
+
+function findAddendSumPairs(arr, k) {  
+  const set = new Set(arr)  
+  const pairs = []
+
+  for (n of set) {    
+    if (set.has(n - k)) pairs.push([n, n - k])
+  } 
+
+  return pairs.length
+}
+
+// findAddendSumPairs([1, 2, 3, 4, 5, 6], 2)
+// findAddendSumPairs([6, 6, 1, 5, 10, 0, -5], -5)
 
 
-// super stack ////////////////////
+
+// super stack ////////////////////////////////////////
 
 function superStack(operations) {
   let stack = []
@@ -129,12 +147,26 @@ function superStack(operations) {
   }
 }
 
-// let input = ['push 4', 'pop', 'push 3', 'push 5', 'push 2', 'inc 3 1', 'pop', 'push 1', 'inc 2 2', 'push 4', 'pop', 'pop']
+// let input = [
+//   'push 4', 
+//   'pop', 
+//   'push 3', 
+//   'push 5', 
+//   'push 2', 
+//   'inc 3 1', 
+//   'pop', 
+//   'push 1', 
+//   'inc 2 2', 
+//   'push 4', 
+//   'pop', 
+//   'pop'
+// ]
+
 // superStack(input)
 
 
 
-// sock merchant (find all pairs) ////////////////////
+// sock merchant (find all pairs) ////////////////////////////////////////
 
 function sockMerchant(n, ar) {
   let likeSocks = {}
@@ -158,7 +190,3 @@ function sockMerchant(n, ar) {
 // let n = 9
 // let ar = [10, 20, 20, 10, 10, 30, 50, 10, 20]
 // sockMerchant(n, ar)
-
-
-
-/////////////////////////////////////////////////
