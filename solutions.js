@@ -312,17 +312,39 @@ function hourglassSum(arr) {
       ]
       sums.push(sum.reduce((a, b) => a + b))
     }
-  }
+  } 
   return Math.max(...sums)
 }
 
-arr = [
-  [1, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0],
-  [0, 0, 2, 4, 4, 0],
-  [0, 0, 0, 2, 0, 0],
-  [0, 0, 1, 2, 4, 0]
-]
+// arr = [
+//   [1, 1, 1, 0, 0, 0],
+//   [0, 1, 0, 0, 0, 0],
+//   [1, 1, 1, 0, 0, 0],
+//   [0, 0, 2, 4, 4, 0],
+//   [0, 0, 0, 2, 0, 0],
+//   [0, 0, 1, 2, 4, 0]
+// ]
+// hourglassSum(arr)
 
-hourglassSum(arr)
+
+
+// array: left rotation //////////////////////////////////
+
+// solution 1 (loop)
+// function rotLeft(a, d) {
+//   for (let i = 0; i < d; i++) {
+//     a.push(a.shift())
+//   }
+//   return a
+// }
+
+// solution 2 (slice)
+function rotLeft(a, d) {
+  return [...a.slice(d), ...a.slice(0, d)]
+}
+
+// let a = [1, 2, 3, 4, 5]
+// let d = 4
+// rotLeft(a, d)
+
+//
