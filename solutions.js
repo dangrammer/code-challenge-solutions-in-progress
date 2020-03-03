@@ -354,10 +354,10 @@ function rotLeft(a, d) {
 function minimumBribes(q) {
   let swaps = 0
 
-  for (let i = q.length - 1; i >= 0; i--) {
+  for (let i = 0; i < q.length; i++) {
     let bribes = q[i] - (i + 1)
     let spot = q[i] - 2 > 0 ? q[i] - 2 : 0
-
+    
     if (bribes > 2) {
       console.log('Too chaotic')
       return
@@ -372,5 +372,31 @@ function minimumBribes(q) {
 }
 
 // let q = [2, 1, 5, 3, 4]
+// let q = [1, 2, 5, 3, 7, 8, 6, 4]
+// let q = [5, 1, 2, 3, 7, 8, 6, 4]
 // let q = [2, 5, 1, 3, 4]
-minimumBribes(q)
+// minimumBribes(q)
+
+
+
+// array: minimum swaps 2 /////////////////////////////////
+
+function minimumSwaps(arr) {
+  let swaps = 0
+
+  for (let i = 0; i < arr.length; i++) {
+    const num = i + 1
+    const idx = arr.indexOf(num, i)
+
+    if (arr[i] !== num) {
+      arr[idx] = arr[i]
+      arr[i] = num
+      swaps++
+    }
+  }
+
+  return swaps
+}
+
+let arr = [4, 3, 1, 2]
+minimumSwaps(arr)
