@@ -16,9 +16,28 @@
 
 //////// *** SECOND DRAFT *** ////////
 
-function arrayManipulation(n, queries) {
- 
-}
+  function arrayManipulation(n, queries) {
+    const arr = new Array(n).fill(0)
+    let max = 0
+
+    for (let i = 0; i < queries.length; i++) {
+      const [a, b, k] = queries[i]
+      arr[a - 1] += k
+      if (b < arr.length) {
+        arr[b] -= k
+      }
+    }
+
+    for (let i = 1; i < n; i++) {
+      arr[i] += arr[i - 1]
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+      max = Math.max(max, arr[i])
+    }
+    
+    return max
+  }
 
 // let n = 5
 // queries = [
