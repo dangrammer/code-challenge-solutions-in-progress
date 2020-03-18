@@ -8,27 +8,28 @@ function countTriplets(arr, r) {
   }
 
   for (let i = 0; i < arr.length; i++) {
-    if (hGram[arr[i] / r]) {
-      hGram2[arr[i]] ? hGram2[arr[i]]++ : hGram2[arr[i]] = 1
+    let n1 = arr[i] 
+    let n2 = n1 / r 
+
+    if (hGram[n2]) {
+      hGram2[n1] ? hGram2[n1] += hGram[n2] : hGram2[n1] = hGram[n2]
     }
   }
 
   for (let i = 0; i < arr.length; i++) {
-    let j = i + 1
-    if (hGram2[arr[j] * r]) {
-      triplets++
-      // hGram2[arr[j]]--
-      // triplets += hGram2[arr[j]]
-      // hGram2[arr[j]] = null
-    }
+    let n3 = arr[i]
+    let n2 = n3 / r
+  
+    if (hGram2[n2]) triplets += hGram2[n2]
   }
+
   console.log(hGram, hGram2, triplets)
   return triplets
 }
 
-const arr = [1, 3, 9, 9, 27, 81]
-const r = 3
-// const arr = [1, 5, 5, 25, 125]
-// const r = 5
+// const arr = [1, 3, 9, 9, 27, 81] // => 6
+// const r = 3
+const arr = [1, 5, 5, 25, 125] // => 4
+const r = 5
 
 countTriplets(arr, r)
