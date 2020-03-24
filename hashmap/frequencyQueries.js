@@ -1,29 +1,59 @@
-//////////////// *** FIRST DATE *** ////////////////
+//////////////// *** FIRST DRAFT *** ////////////////
+
+// function freqQuery(queries) {
+//   const result = []
+//   const hGram = {}
+
+//   for (let q of queries) {
+//     const [command, value] = q
+
+//     switch (command) {
+//       case 1:
+//         hGram[value] ? hGram[value]++ : hGram[value] = 1
+//         break
+//       case 2:
+//         if (hGram[value]) hGram[value]--
+//         break
+//       case 3:
+//         Object.values(hGram).includes(value) ? result.push(1) : result.push(0)
+//         break
+//     }
+//   }
+
+//   console.log(result)
+//   return result
+// }
+
+//////////////// *** SECOND DRAFT *** ////////////////
 
 function freqQuery(queries) {
   const result = []
-  const hGram = {}
+  const nums = {}
+  const frqs = {}
 
   for (let q of queries) {
-    const command = q[0]
-    const value = q[1]
-
-    if (value > 10 ** 9) return
-
+    const [command, val] = q
+    
     switch (command) {
       case 1:
-        hGram[value] ? hGram[value]++ : hGram[value] = 1
+        nums[val] = nums[val] || 0
+        if (nums[val] > 0) frqs[nums[val]]--
+        nums[val]++
+        frqs[nums[val]] ? frqs[nums[val]]++ : frqs[nums[val]] = 1
         break
       case 2:
-        if (hGram[value]) hGram[value]--
+        if (nums[val] > 0) {
+          frqs[nums[val]]--
+          nums[val]--
+          frqs[nums[val]] ? frqs[nums[val]]++ : frqs[nums[val]] = 1
+        }
         break
       case 3:
-        Object.values(hGram).includes(value) ? result.push(1) : result.push(0)
+        result.push(frqs[val] > 0 ? 1 : 0)
         break
     }
   }
 
-  console.log(result)
   return result
 }
 
@@ -59,9 +89,3 @@ queries = [
 ]
 
 freqQuery(queries)
-
-// -  1 x: Insert x in your data structure.
-// -  2 y: Delete one occurence of y from your data structure, if present.
-// -  3 z: Check if any integer is present whose frequency is exactly z. If yes, print 1 else 0.
-
-// output: Return an integer array consisting of all the outputs of queries of type 3.
