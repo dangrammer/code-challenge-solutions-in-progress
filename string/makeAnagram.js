@@ -12,11 +12,12 @@ function makeAnagram(a, b) {
     hGram[str2[i]] > 0 ? hGram[str2[i]]-- : count++
   }
 
-  // for (let key in hGram) {
-  //   count += hGram[key]
-  // }
+  for (let key in hGram) {
+    count += hGram[key]
+  }
 
-  count += Object.values(hGram).reduce((a, b) => a + b)
+  // alternative to loop at line 15
+  // count += Object.values(hGram).reduce((a, b) => a + b)
   
   console.log(count)
   return count
