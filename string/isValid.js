@@ -1,64 +1,99 @@
-const s = 'abcdefghhgfedecba' // YES
+// const s = 'abcdefghhgfedecba' // YES
 // const s = 'aabbcd' // NO
 // const s = 'aabbccddeefghi' // NO
 // const s = 'aabbcc' // YES
 // const s = 'ibfdgaeadiaefgbhbdghhhbgdfgeiccbiehhfcggchgghadhdhagfbahhddgghbdehidbibaeaagaeeigffcebfbaieggabcfbiiedcabfihchdfabifahcbhagccbdfifhghcadfiadeeaheeddddiecaicbgigccageicehfdhdgafaddhffadigfhhcaedcedecafeacbdacgfgfeeibgaiffdehigebhhehiaahfidibccdcdagifgaihacihadecgifihbebffebdfbchbgigeccahgihbcbcaggebaaafgfedbfgagfediddghdgbgehhhifhgcedechahidcbchebheihaadbbbiaiccededchdagfhccfdefigfibifabeiaccghcegfbcghaefifbachebaacbhbfgfddeceababbacgffbagidebeadfihaefefegbghgddbbgddeehgfbhafbccidebgehifafgbghafacgfdccgifdcbbbidfifhdaibgigebigaedeaaiadegfefbhacgddhchgcbgcaeaieiegiffchbgbebgbehbbfcebciiagacaiechdigbgbghefcahgbhfibhedaeeiffebdiabcifgccdefabccdghehfibfiifdaicfedagahhdcbhbicdgibgcedieihcichadgchgbdcdagaihebbabhibcihicadgadfcihdheefbhffiageddhgahaidfdhhdbgciiaciegchiiebfbcbhaeagccfhbfhaddagnfieihghfbaggiffbbfbecgaiiidccdceadbbdfgigibgcgchafccdchgifdeieicbaididhfcfdedbhaadedfageigfdehgcdaecaebebebfcieaecfagfdieaefdiedbcadchabhebgehiidfcgahcdhcdhgchhiiheffiifeegcfdgbdeffhgeghdfhbfbifgidcafbfcd' // YES
 // const s = 'aaaaabc' // NO
 // const s = 'aabbcccdd' // YES
+const s = 'aaabcccddd' // YES
 isValid(s)
 
-///////////// SIXTH DRAFT ///////////////
+///////////// *** SEVENTH DRAFT - it works! *** ///////////////
 
 function isValid(s) {
-  const letters = {}
-  let freqs
-  let max
-  let min
-
-  for (let l of s) {
-    letters[l] ? letters[l]++ : letters[l] = 1
-  }
-
-  freqs = [...new Set(Object.values(letters))]
-
-  if (freqs.length === 1) {
-    console.log('YES')
-    return 'YES'
-  }
-
-  if (freqs.length < 3) {
-    if (freqs[0] > freqs[1]) {
-      max = freqs[0]
-      min = freqs[1]
-    } else if (freqs[1] > freqs[0]) {
-      max = freqs[1]
-      min = freqs[0]
-    }
+  const cMap = {}
   
-    let maxCount = 0
-    let minCount = 0
-
-    for (let l in letters) {
-      if (letters[l] === max) maxCount++
-      if (letters[l] === min) minCount++
-    }
-
-    console.log('maxCount', maxCount, 'minCount', minCount)
-
-    if (maxCount === 1 || minCount === 1) {
-      if (max === 1 || min === 1 || Math.abs(max - min) === 1) {
-        console.log('YES - one deletion available')
-        return 'YES'
-      }
-    }
+  for (let c of s) {
+    cMap[c] ? cMap[c]++ : cMap[c] = 1
   }
- 
-  console.log(letters)
-  console.log(freqs)
 
-  console.log('NO - too many characters')
+  const freqs = new Set(Object.values(cMap))
+
+  if (freqs.size === 1) return 'YES'
+
+  if (freqs.size === 2) {
+    const max = Math.max(...freqs)
+    const min = Math.min(...freqs)
+    let maxCt = 0
+    let minCt = 0
+
+    for (let c in cMap) {
+      if (cMap[c] === max) maxCt++
+      if (cMap[c] === min) minCt++
+    }
+
+    if (
+      (minCt === 1 && min === 1) || 
+      (maxCt === 1 && max === min + 1)
+    ) return 'YES'
+  }
+
   return 'NO'
 }
+
+
+///////////// *** SIXTH DRAFT *** ///////////////
+
+// function isValid(s) {
+//   const letters = {}
+//   let freqs
+//   let max
+//   let min
+
+//   for (let l of s) {
+//     letters[l] ? letters[l]++ : letters[l] = 1
+//   }
+
+//   freqs = [...new Set(Object.values(letters))]
+
+//   if (freqs.length === 1) {
+//     console.log('YES')
+//     return 'YES'
+//   }
+
+//   if (freqs.length < 3) {
+//     if (freqs[0] > freqs[1]) {
+//       max = freqs[0]
+//       min = freqs[1]
+//     } else if (freqs[1] > freqs[0]) {
+//       max = freqs[1]
+//       min = freqs[0]
+//     }
+  
+//     let maxCount = 0
+//     let minCount = 0
+
+//     for (let l in letters) {
+//       if (letters[l] === max) maxCount++
+//       if (letters[l] === min) minCount++
+//     }
+
+//     console.log('maxCount', maxCount, 'minCount', minCount)
+
+//     if (maxCount === 1 || minCount === 1) {
+//       if (max === 1 || min === 1 || Math.abs(max - min) === 1) {
+//         console.log('YES - one deletion available')
+//         return 'YES'
+//       }
+//     }
+//   }
+ 
+//   console.log(letters)
+//   console.log(freqs)
+
+//   console.log('NO - too many characters')
+//   return 'NO'
+// }
 
 
 ///////////// *** FIFTH DRAFT *** /////////////
