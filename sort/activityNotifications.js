@@ -57,57 +57,94 @@
 //   }
 // }
 
-// const days = 5
-// const debits = [2, 3, 4, 2, 3, 6, 8, 4, 5] // 2
-const days = 3
-const debits = [10, 20, 30, 40 , 50] // 1
-activityNotifications(debits, days) 
 
 ////////// *** THIRD DRAFT *** //////////
 
-function getMedian(hGram, days, medPos) {
-  const keys = Object.keys(hGram)
-  let idx = 0
-  let a = 0
-  let b = 0
+// function getMedian(hGram, days, medPos) {
+//   const keys = Object.keys(hGram)
+//   let idx = 0
+//   let a = 0
+//   let b = 0
 
-  // something is broken here
-  while (medPos > 0) {
-    const key = keys[idx]
-    medPos -= hGram[key]
-    if (medPos < 1) a = key
-    if (!b && medPos < 2) b = key
-    idx++
-    console.log(a, b)
-  }
+//   while (medPos > 0) {
+//     const key = keys[idx]
+//     medPos -= hGram[key]
+//     if (medPos < 1) a = key
+//     if (!b && medPos < 2) b = key
+//     idx++
+//   }
   
-  return days % 2 === 0 ? (a + b) / 2 : a
-}
+//   return days % 2 === 0 ? (a + b) / 2 : a
+// }
+
+// function activityNotifications(debits, days) {
+//   const hGram = {}
+//   let count = 0
+//   let median
+//   const medPos = days % 2 === 0 ? days / 2 : Math.ceil(days / 2)
+
+//   for (let i = 0; i < days; i++) {
+//     hGram[debits[i]] ? hGram[debits[i]]++ : hGram[debits[i]] = 1
+//   }
+
+//   for (let i = 0; i < debits.length - days; i++) {
+//     let j = i + days
+//     median = getMedian(hGram, days, medPos)
+
+//     hGram[debits[i]] ? hGram[debits[i]]-- : delete hGram[debits[i]]
+//     hGram[debits[j]] ? hGram[debits[j]]++ : hGram[debits[j]] = 1
+
+//     if (debits[j] >= median * 2) count++
+//   }
+  
+//   return count
+// }
+
+
+const days = 5
+const debits = [2, 3, 4, 2, 3, 6, 8, 4, 5] // 2
+// const days = 3
+// const debits = [10, 20, 30, 40 , 50] // 1
+activityNotifications(debits, days) 
+
+/////////// *** FOURTH DRAFT *** ////////////
 
 function activityNotifications(debits, days) {
-  const hGram = {}
-  let count = 0
-  let median
-  const medPos = days % 2 === 0 ? days / 2 : Math.ceil(days / 2)
+  const max = 201
+  const countArr = new Array(max).fill(0)
+  let notices = 0 
 
-  for (let i = 0; i < days; i++) {
-    hGram[debits[i]] ? hGram[debits[i]]++ : hGram[debits[i]] = 1
+  for (let i = 0; i < debits.length; i++) {
+    countArr[debits[i]]++
   }
-  // console.log('initial', hGram)
-  // console.log('')
-  for (let i = 0; i < debits.length - days; i++) {
-    let j = i + days
-    // console.log('begin loop', hGram)
 
-    hGram[debits[i]] ? hGram[debits[i]]-- : delete hGram[debits[i]]
-    hGram[debits[j]] ? hGram[debits[j]]++ : hGram[debits[j]] = 1
-    median = getMedian(hGram, days, medPos)
-    console.log('median', median)
+  const median = () => {
+    let idx = 0
+    let x
+    let y
 
-    if (debits[j] >= median * 2) count++
-    // console.log('end loop', hGram)
-    // console.log('')
+    for (let i = 0; i < max; i++) {
+      idx += countArr[i]
+      x = i
+      if (idx * 2 >= days) break
+    }
+
+    if (days % 2 === 1 || idx * 2 > days) return x
+
+    for (let i = x + 1; i < max; i++) {
+      if (countArr[i] !== 0) break
+      y = i
+    }
+
+    return (x + y) / 2
   }
-  
-  console.log(count)
+
+  for (let i = days; i < debits.length; i++) {
+    if (debits[i] >= median() * 2) notices++
+    countArr[debits[i - days]]--
+    countArr[debits[i]]++
+  }    
+
+  return notices
 }
+ 
