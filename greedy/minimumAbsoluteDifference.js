@@ -19,12 +19,14 @@
 //////////////// *** SECOND DRAFT *** ////////////////
 
 function minimumAbsoluteDifference(arr) {
-  let nums = arr.sort((a, b) => a - b)
-  let minDiff = Math.abs(nums[0] - nums[1])
+  arr.sort((a, b) => a - b)
 
+  let minDiff = arr[1] - arr[0]
+  
   for (let i = 1; i < arr.length - 1; i++) {
-    let diff = Math.abs(nums[i] - nums[i + 1])
+    let diff = arr[i + 1] - arr[i]
     minDiff = Math.min(diff, minDiff)
+    console.log(minDiff, diff)
   }
 
   console.log(minDiff)
@@ -32,6 +34,7 @@ function minimumAbsoluteDifference(arr) {
 }
 
 
-// const nums = [-59, -36, -13, 1, -53, -92, -2, -96, -54, 75] // 1
-const nums = [1, -3, 71, 68, 17] // 3
+const nums = [-59, -36, -13, 1, -53, -92, -2, -96, -54, 75] // 1
+// const nums = [1, -3, 71, 68, 17] // 3
+// const nums = [3, 1, 4, 2, 5] // 1
 minimumAbsoluteDifference(nums)
