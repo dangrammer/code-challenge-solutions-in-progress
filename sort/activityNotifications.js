@@ -101,50 +101,93 @@
 // }
 
 
+/////////// *** FOURTH DRAFT *** ////////////
+
+// function activityNotifications(debits, days) {
+//   const max = 201
+//   const countArr = new Array(max).fill(0)
+//   let notices = 0 
+
+//   for (let i = 0; i < debits.length; i++) {
+//     countArr[debits[i]]++
+//   }
+
+//   const median = () => {
+//     let idx = 0
+//     let x
+//     let y
+
+//     for (let i = 0; i < max; i++) {
+//       idx += countArr[i]
+//       x = i
+//       if (idx * 2 >= days) break
+//     }
+
+//     if (days % 2 === 1 || idx * 2 > days) return x
+
+//     for (let i = x + 1; i < max; i++) {
+//       if (countArr[i] !== 0) break
+//       y = i
+//     }
+
+//     return (x + y) / 2
+//   }
+
+//   for (let i = days; i < debits.length; i++) {
+//     if (debits[i] >= median() * 2) notices++
+//     countArr[debits[i - days]]--
+//     countArr[debits[i]]++
+//   }    
+
+//   return notices
+// }
+
+
 const days = 5
 const debits = [2, 3, 4, 2, 3, 6, 8, 4, 5] // 2
 // const days = 3
 // const debits = [10, 20, 30, 40 , 50] // 1
 activityNotifications(debits, days) 
 
-/////////// *** FOURTH DRAFT *** ////////////
+
 
 function activityNotifications(debits, days) {
-  const max = 201
-  const countArr = new Array(max).fill(0)
-  let notices = 0 
+  const dic = {}
+  const ans = 0
+
+  const find = (idx) => {
+    let s = 0
+    for (let i = 0; i < 200; i++) {
+      let freq = 0
+      if (dic[i]) freq = dic[i]
+      s = s + freq
+      if (s >= idx) return i
+    }
+  }
 
   for (let i = 0; i < debits.length; i++) {
-    countArr[debits[i]]++
+    let val = debits[i]
+      
+    if (i >= days) {
+      let med = find((days / 2) + (days % 2))
+
+      if (days % 2 === 0) {
+        let ret = find((days / 2) + 1)
+        if (val >= med + ret) ans++
+      } else {
+        if (val >= med * 2) ans++
+      }
+    }
+  
+    dic[val] ? dic[val]++ : dic[val] = 0
+  
+    if (i >= days) {
+      let prev = debits[i - days]
+      dic[prev]++
+    }
   }
 
-  const median = () => {
-    let idx = 0
-    let x
-    let y
-
-    for (let i = 0; i < max; i++) {
-      idx += countArr[i]
-      x = i
-      if (idx * 2 >= days) break
-    }
-
-    if (days % 2 === 1 || idx * 2 > days) return x
-
-    for (let i = x + 1; i < max; i++) {
-      if (countArr[i] !== 0) break
-      y = i
-    }
-
-    return (x + y) / 2
-  }
-
-  for (let i = days; i < debits.length; i++) {
-    if (debits[i] >= median() * 2) notices++
-    countArr[debits[i - days]]--
-    countArr[debits[i]]++
-  }    
-
-  return notices
+  console.log(dic)
+  console.log(ans)
+  return ans
 }
- 
