@@ -6,7 +6,7 @@ function whatFlavors(cost, money) {
       hash[cost[i]].push(i + 1) : 
         hash[cost[i]] = [i + 1]
   }
- 
+
   for (let c of cost) {
     if (hash[money - c]) {
       if (c === money - c) {

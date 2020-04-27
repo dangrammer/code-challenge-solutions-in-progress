@@ -146,48 +146,57 @@
 const days = 5
 const debits = [2, 3, 4, 2, 3, 6, 8, 4, 5] // 2
 // const days = 3
-// const debits = [10, 20, 30, 40 , 50] // 1
+// const debits = [10, 20, 30, 40, 50] // 1
 activityNotifications(debits, days) 
 
 
 
 function activityNotifications(debits, days) {
-  const dic = {}
-  const ans = 0
+  const countArr = new Array(201).fill(0)
+  let end = days
+  let current = 0
+  let notices = 0
+  let len = debits.length
 
-  const find = (idx) => {
-    let s = 0
-    for (let i = 0; i < 200; i++) {
-      let freq = 0
-      if (dic[i]) freq = dic[i]
-      s = s + freq
-      if (s >= idx) return i
-    }
+  for (let d of debits) {
+    countArr[d]++
   }
 
-  for (let i = 0; i < debits.length; i++) {
-    let val = debits[i]
-      
-    if (i >= days) {
-      let med = find((days / 2) + (days % 2))
+  const medPos = days % 2 === 0 ? days / 2 : Math.floor(days / 2) + 1
 
-      if (days % 2 === 0) {
-        let ret = find((days / 2) + 1)
-        if (val >= med + ret) ans++
-      } else {
-        if (val >= med * 2) ans++
-      }
-    }
-  
-    dic[val] ? dic[val]++ : dic[val] = 0
-  
-    if (i >= days) {
-      let prev = debits[i - days]
-      dic[prev]++
-    }
+  while (end < len) {
+    let median = getMedian(countArr, days, medPos)
+    if (debits[end] >= median * 2) notices++
+    countArr[debits[current]] -= 1
+    countArr[debits[end]] += 1
+    current++
+    end--
   }
 
-  console.log(dic)
-  console.log(ans)
-  return ans
+  console.log(end)
+  console.log(medPos)
+  console.log(notices)
+  return notices
+}
+
+function getMedian(countArr, days, medPos) {
+  let counter = 0
+  let left = 0
+
+  while (counter < medPos) {
+    counter += countArr[left]
+    left++
+  }
+
+  let right = left
+  left--
+
+  if (counter > medPos || days % 2 !== 0) {
+    return left
+  } else {
+    while (countArr[right] === 0) {
+      right++
+    }
+    return (left + right) / 2
+  }
 }
