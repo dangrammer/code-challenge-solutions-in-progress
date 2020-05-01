@@ -151,52 +151,23 @@ activityNotifications(debits, days)
 
 
 
-function activityNotifications(debits, days) {
-  const countArr = new Array(201).fill(0)
-  let end = days
-  let current = 0
-  let notices = 0
-  let len = debits.length
+/////////////// sketch work //////////////////
 
+function activityNotifications(debits, days) {
+  const countArr = new Array(Math.max(...debits) + 1).fill(0)
+  const notices = 0
+  
   for (let d of debits) {
     countArr[d]++
   }
 
-  const medPos = days % 2 === 0 ? days / 2 : Math.floor(days / 2) + 1
-
-  while (end < len) {
-    let median = getMedian(countArr, days, medPos)
-    if (debits[end] >= median * 2) notices++
-    countArr[debits[current]] -= 1
-    countArr[debits[end]] += 1
-    current++
-    end--
+  for (let i = days; i < debits.length; i++) {
+    // if (debits[i] >= median * 2) notices++
   }
 
-  console.log(end)
-  console.log(medPos)
+  console.log(debits)
+  console.log(countArr)
+
   console.log(notices)
   return notices
-}
-
-function getMedian(countArr, days, medPos) {
-  let counter = 0
-  let left = 0
-
-  while (counter < medPos) {
-    counter += countArr[left]
-    left++
-  }
-
-  let right = left
-  left--
-
-  if (counter > medPos || days % 2 !== 0) {
-    return left
-  } else {
-    while (countArr[right] === 0) {
-      right++
-    }
-    return (left + right) / 2
-  }
 }
