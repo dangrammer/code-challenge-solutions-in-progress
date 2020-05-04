@@ -17,23 +17,3 @@ function pairs(k, arr) {
 const k = 2  
 const arr = [1, 5, 3, 4, 2] // 3
 pairs(k, arr)
-
-
-
-////// sketch work //////
-
-// for (let i = 0; i < arr.length; i++) {
-//   let targetVal = Math.abs(arr[i] + k)
-//   if (hash[targetVal]) total++
-//   if (hash[targetVal]) hash[targetVal] = 1
-//   if (!hash[arr[i]]) hash[arr[i]] = 1
-// }
-
-////working one/////
-// for (let i = 0; i < arr.length; i++) {
-//   let targetVal = Math.abs(arr[i] + k)
-//   if (hash[targetVal]) {
-//     total++
-//     console.log(`${arr[i]} - ${targetVal} = ${k}`)
-//   }
-// }
