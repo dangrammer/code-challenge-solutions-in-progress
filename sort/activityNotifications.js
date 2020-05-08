@@ -153,21 +153,44 @@ activityNotifications(debits, days)
 
 /////////////// sketch work //////////////////
 
-function activityNotifications(debits, days) {
-  const countArr = new Array(Math.max(...debits) + 1).fill(0)
-  const notices = 0
+function getMedian(hGram, days, medPos) {
+  const keys = Object.keys(hGram)
+  let idx = 0
+  let a = 0
+  let b = 0
+
+  while (medPos > 0) {
+    const key = keys[idx]
+    medPos -= hGram[key]
+    if (medPos < 1) a = key
+    if (!b && medPos < 2) b = key
+    idx++
+  }
   
-  for (let d of debits) {
-    countArr[d]++
-  }
-
-  for (let i = days; i < debits.length; i++) {
-    // if (debits[i] >= median * 2) notices++
-  }
-
-  console.log(debits)
-  console.log(countArr)
-
-  console.log(notices)
-  return notices
+  return days % 2 === 0 ? (a + b) / 2 : a
 }
+
+function activityNotifications(debits, days) {
+  const hGram = {}
+  let count = 0
+  let median
+  const medPos = days % 2 === 0 ? days / 2 : Math.ceil(days / 2)
+
+  for (let i = 0; i < days; i++) {
+    hGram[debits[i]] ? hGram[debits[i]]++ : hGram[debits[i]] = 1
+  }
+
+  for (let i = 0; i < debits.length - days; i++) {
+    let j = i + days
+    median = getMedian(hGram, days, medPos)
+
+    hGram[debits[i]] ? hGram[debits[i]]-- : delete hGram[debits[i]]
+    hGram[debits[j]] ? hGram[debits[j]]++ : hGram[debits[j]] = 1
+
+    if (debits[j] >= median * 2) count++
+  }
+  
+  return count
+}
+
+
