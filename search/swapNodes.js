@@ -1,14 +1,20 @@
 class Node {
-  constructor(depth, index, left, right) {
+  constructor(data, depth, left, right) {
+    this.data = data
     this.depth = depth
-    this.index = index
     this.left = left
     this.right = right
   }
 }
 
-function swapNodes(indexes, queries) {
+function inOrderTraversal(indexes) {
   
+}
+
+function swapNodes(indexes, queries) {
+  const result = []
+
+  return result
 }
 
 const indexes = [[2, 3], [-1, -1], [-1 -1]]
