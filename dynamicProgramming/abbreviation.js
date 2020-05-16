@@ -15,48 +15,77 @@ const b = 'ABC'
 // NO
 abbreviation(a, b)
 
+////////// *** FIFTH DRAFT *** //////////
+
+function abbreviation(a, b) {
+ console.log(a, b)
+ const lowCase = (a, b) => a === b.toLowerCase()
+
+ if (a.length < b.length) {
+   console.log('NO: a string shorter than b string')
+ }
+
+ if (!b.length) {
+   for (const c of a) {
+     if (!lowCase(c)) {
+       console.log('NO: remaining uppercase chars in a')
+     }
+   }
+   console.log('YES')
+   return 'YES'
+ }
+ if (a[0] === b[0]) abbreviation(a.slice(1), b.slice(1))
+ if (lowCase(a, b)) abbreviation(a.slice(1), b.slice(1))
+ if (lowCase(a, a)) abbreviation(a.slice(1), b)
+ 
+ if (a[0] !== b[0]) {
+   console.log('NO: a char and b char both uppercase and unequal')
+   return 'NO'
+ }
+}
+
 
 ////////// *** FOURTH DRAFT *** //////////
 
-function abbreviation(a, b) {
-  console.log('a =>', a)
-  console.log('b =>', b)
-  const len = a.length
-  const lowCase = (a, b) => a[0] === b[0].toLowerCase()
+// function abbreviation(a, b) {
+//   console.log('a =>', a)
+//   console.log('b =>', b)
+//   const len = a.length
+//   const lowCase = (a, b) => a[0] === b[0].toLowerCase()
 
-  while (a.length && b.length) {
-    if (a[0] === b[0] || lowCase(a, b)) {
-      a = a.slice(1)
-      b = b.slice(1)
-    } 
-    else if (lowCase(a, a)) a = a.slice(1)
-    else if (a[0] !== b[0]) {
-      console.log('NO')
-      return 'NO'
-    }
-  }
+//   while (a.length && b.length) {
+//     if (a[0] === b[0] || lowCase(a, b)) {
+//       a = a.slice(1)
+//       b = b.slice(1)
+//     } 
+//     else if (lowCase(a, a)) a = a.slice(1)
+//     else if (a[0] !== b[0]) {
+//       console.log('NO')
+//       return 'NO'
+//     }
+//   }
 
-  if (b.length) {
-    console.log('NO')
-    return 'NO'
-  }
+//   if (b.length) {
+//     console.log('NO')
+//     return 'NO'
+//   }
 
-  if (a.length) {
-    for (const c of a) {
-      if (!lowCase(a, a)) {
-        console.log('NO bang')
-        return 'NO'
-      }
-    }
-  }
+//   if (a.length) {
+//     for (const c of a) {
+//       if (!lowCase(a, a)) {
+//         console.log('NO bang')
+//         return 'NO'
+//       }
+//     }
+//   }
 
-  console.log('after while loop')
-  console.log('a =>', a)
-  console.log('b =>', b)
+//   console.log('after while loop')
+//   console.log('a =>', a)
+//   console.log('b =>', b)
 
-  console.log('YES')
-  return 'YES'
-}
+//   console.log('YES')
+//   return 'YES'
+// }
 
 
 ////////// *** THIRD DRAFT *** //////////
