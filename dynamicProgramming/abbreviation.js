@@ -1,5 +1,5 @@
-// const a = 'daBcd'
-// const b = 'ABC'
+const a = 'daBcd'
+const b = 'ABC'
 // // YES
 // const a = 'AdBdCeeeeee'
 // const b = 'ABC'
@@ -16,50 +16,79 @@
 // const a = 'KXz'
 // const b = 'KXZQ'
 // NO
-const a = 'KXZ'
-const b = 'KXZ'
-// NO
+// const a = 'KXZ'
+// const b = 'KXZ'
+// YES
 abbreviation(a, b)
+
+////////// *** SEVENTH DRAFT *** //////////
+
+function abbreviation(a, b) {
+  const aLen = a.length
+  const bLen = b.length
+  const matrix = []
+
+  for (let i = 0; i <= aLen; i++) {
+    const row = []
+    for (let j = 0; j <= bLen; j++) {
+      row.push(0)
+    }
+    matrix.push(row)
+  }
+
+  matrix[0][0] = 1
+  
+  for (let i = 0; i < aLen; i++) {
+    for (let j = 0; j <= bLen; j++) {
+      if (!matrix[i][j]) continue
+      if (j < bLen && a[i].toUpperCase() === b[j]) matrix[i + 1][j + 1] = 1
+      if (a[i] === a[i].toLowerCase()) matrix[i + 1][j] = 1
+    }
+  }
+  
+  return matrix[aLen][bLen] ? 'YES' : 'NO'
+}
+
 
 ////////// *** SIXTH DRAFT *** //////////
 
-function abbreviation(a, b) {
-  const len = a.length
-  const lowCase = (a, b) => {
-    if (a[0] && b[0]) return a[0] === b[0].toLowerCase()
-  }
+// function abbreviation(a, b) {
+//   const len = a.length
+//   const lowCase = (a, b) => {
+//     if (a[0] && b[0]) return a[0] === b[0].toLowerCase()
+//   }
 
-  if (a === b) return 'YES'
+//   if (a === b) return 'YES'
 
-  if (len < b.length) return 'NO'
+//   if (len < b.length) return 'NO'
 
-  for (let i = 0; i < len; i++) {
-    if (a.length < b.length) return 'NO'
+//   for (let i = 0; i < len; i++) {
+//     if (a.length < b.length) return 'NO'
     
-    if (b.length < 1) {
-      for (const c of a) {
-        if (!lowCase(c, c)) return 'NO'
-      }
-      return 'YES'
-    }
+//     if (b.length < 1) {
+//       for (const c of a) {
+//         if (!lowCase(c, c)) return 'NO'
+//       }
+//       return 'YES'
+//     }
 
-    if (a[0] === b[0]) {
-      a = a.slice(1)
-      b = b.slice(1)
-    }
+//     if (a[0] === b[0]) {
+//       a = a.slice(1)
+//       b = b.slice(1)
+//     }
 
-    if (lowCase(a, b)) {
-      a = a.slice(1)
-      b = b.slice(1)
-    }
+//     if (lowCase(a, b)) {
+//       a = a.slice(1)
+//       b = b.slice(1)
+//     }
 
-    if (lowCase(a, a)) a = a.slice(1)
-  }
+//     if (lowCase(a, a)) a = a.slice(1)
+//   }
 
-  if (!a.length && !b.length) return 'YES'
+//   if (!a.length && !b.length) return 'YES'
 
-  return 'NO'
-}
+//   return 'NO'
+// }
 
 
 ////////// *** FIFTH DRAFT *** //////////
@@ -234,7 +263,3 @@ function abbreviation(a, b) {
 //   console.log('YES')
 //   return
 // }
-
-
-
-
