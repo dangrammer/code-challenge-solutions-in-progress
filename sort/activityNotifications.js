@@ -1,13 +1,13 @@
-// const days = 5
-// const debits = [2, 3, 4, 2, 3, 6, 8, 4, 5] // 2
-const days = 3
-const debits = [10, 20, 30, 40, 50] // 1
+const days = 5
+const debits = [2, 3, 4, 2, 3, 6, 8, 4, 5] // 2
+// const days = 3
+// const debits = [10, 20, 30, 40, 50] // 1
 activityNotifications(debits, days) 
 
 
 /////////// *** FIFTH DRAFT *** ////////////
 
-function getMedian(countArr, days) {
+function getMedianx2(countArr, days) {
   let sum = 0
 
   for (let i = 0; i < countArr.length; i++) {
@@ -28,8 +28,8 @@ function activityNotifications(debits, days) {
   }
 
   for (let i = days; i < debits.length; i++){
-    let median = getMedian(countArr, days)
-    if (median <= debits[i]) notices++
+    let medianx2 = getMedianx2(countArr, days)
+    if (debits[i] >= medianx2) notices++
     countArr[debits[i - days]]--
     countArr[debits[i]]++
   }
@@ -37,6 +37,72 @@ function activityNotifications(debits, days) {
   console.log(notices)
   return notices
 }
+
+/////////// Customized print log for function analysis //////////
+
+// function getMedianx2(countArr, days) {
+//   console.log('      count array:', countArr) // [0, 0, 2, 2, 1, 0, 0, 0, 0, 0]
+//   console.log('      trailing day count:', days)
+//   let sum = 0
+
+//   console.log('\x1b[34m%s\x1b[0m', '      getMedian loop:')
+//   for (let i = 0; i < countArr.length; i++) {
+//   console.log('\x1b[31m%s\x1b[0m', '        iteration', i + 1)   
+//     sum += countArr[i]
+//   console.log('          accumulation sum:', sum)  
+//     if (sum * 2 === days) return (i * 2 + 1)
+//     if (sum * 2 > days) return (i * 2)
+//   }
+//   console.log('')
+
+//   return 1
+// }
+
+// function activityNotifications(debits, days) {
+//   console.log('input:')
+//   console.log('  debits array:', debits)
+//   console.log('  day span', days)
+//   console.log('')
+//   const countArr = new Array(10).fill(0)
+//   console.log('initialize:')
+//   console.log('  count array:', countArr)
+//   let notices = 0
+//   console.log('  notices:', notices)
+//   console.log('')
+
+//   for (let i = 0; i < days; i++) {
+//     countArr[debits[i]]++
+//   }
+//   console.log('load count array:')
+//   console.log('  count array:', countArr)
+//   console.log('')
+
+//   console.log('\x1b[35m%s\x1b[0m', 'main loop:')
+//   for (let i = days; i < debits.length; i++) {
+//   console.log('\x1b[36m%s\x1b[0m', '  iteration', i - (days - 1))  
+//   console.log('    daily debit:', debits[i])
+//   console.log('    trailing days:', debits.slice(i - days, i))
+//   console.log('')
+//   console.log('\x1b[32m%s\x1b[0m', '    get median function:')
+//     const medianx2 = getMedianx2(countArr, days)
+//   console.log('')
+//   console.log('    median:', medianx2 / 2)  
+//     if (debits[i] >= medianx2) notices++
+//   console.log(debits[i] >= medianx2  ? `    daily debit(${debits[i]}) is greater than or equal to (median * 2 = ${medianx2}), increment notices` : `    daily debit(${debits[i]}) is less than (median * 2 = ${medianx2}), no adjustment to notices`)  
+//   console.log('    notices + 1 =', notices)
+//   console.log('')
+//   console.log('    count array before adjustment:', countArr)
+//     countArr[debits[i - days]]--
+//     countArr[debits[i]]++
+//   console.log('    count array after adjustment :', countArr)
+//   console.log('')  
+//   }
+
+//   console.log('output:')
+//   console.log('  notices:', notices)
+//   console.log('')
+//   return notices
+// }
 
 
 /////////// *** FOURTH DRAFT *** ////////////
