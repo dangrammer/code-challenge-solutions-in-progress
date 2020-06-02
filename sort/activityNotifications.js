@@ -2,6 +2,8 @@ const days = 5
 const debits = [2, 3, 4, 2, 3, 6, 8, 4, 5] // 2
 // const days = 3
 // const debits = [10, 20, 30, 40, 50] // 1
+// const days = 2
+// const debits = [2, 4, 5, 3, 2, 6] // 2
 activityNotifications(debits, days) 
 
 
@@ -16,7 +18,6 @@ function getMedianx2(countArr, days) {
     if (sum * 2 > days) return (i * 2)
   }
 
-  return 1
 }
 
 function activityNotifications(debits, days) {
@@ -27,7 +28,7 @@ function activityNotifications(debits, days) {
     countArr[debits[i]]++
   }
 
-  for (let i = days; i < debits.length; i++){
+  for (let i = days; i < debits.length; i++) {
     let medianx2 = getMedianx2(countArr, days)
     if (debits[i] >= medianx2) notices++
     countArr[debits[i - days]]--
@@ -38,7 +39,7 @@ function activityNotifications(debits, days) {
   return notices
 }
 
-/////////// Customized print log for function analysis //////////
+/////////// Customized print log for function analysis (fifth draft) //////////
 
 // function getMedianx2(countArr, days) {
 //   console.log('      count array:', countArr) // [0, 0, 2, 2, 1, 0, 0, 0, 0, 0]
@@ -50,12 +51,12 @@ function activityNotifications(debits, days) {
 //   console.log('\x1b[31m%s\x1b[0m', '        iteration', i + 1)   
 //     sum += countArr[i]
 //   console.log('          accumulation sum:', sum)  
+//   console.log('          current index:', i)  
 //     if (sum * 2 === days) return (i * 2 + 1)
 //     if (sum * 2 > days) return (i * 2)
 //   }
 //   console.log('')
 
-//   return 1
 // }
 
 // function activityNotifications(debits, days) {
@@ -86,13 +87,16 @@ function activityNotifications(debits, days) {
 //   console.log('\x1b[32m%s\x1b[0m', '    get median function:')
 //     const medianx2 = getMedianx2(countArr, days)
 //   console.log('')
-//   console.log('    median:', medianx2 / 2)  
+//   console.log('    medianx2:', medianx2)  
 //     if (debits[i] >= medianx2) notices++
-//   console.log(debits[i] >= medianx2  ? `    daily debit(${debits[i]}) is greater than or equal to (median * 2 = ${medianx2}), increment notices` : `    daily debit(${debits[i]}) is less than (median * 2 = ${medianx2}), no adjustment to notices`)  
-//   console.log('    notices + 1 =', notices)
+//   console.log(debits[i] >= medianx2  ? `    daily debit(${debits[i]}) is greater than or equal to median * 2 = ${medianx2}, increment notices` : `    daily debit(${debits[i]}) is less than median * 2 = ${medianx2}, no adjustment to notices`)  
+//   console.log(debits[i] >= medianx2  ? `    notices + 1 = ${notices}` : `    notices = ${notices}`)
 //   console.log('')
+//   if (i === debits.length - 1) break
 //   console.log('    count array before adjustment:', countArr)
+//   console.log(`      countArr[${debits[i - days]}]--`)
 //     countArr[debits[i - days]]--
+//   console.log(`      countArr[${debits[i]}]++`)  
 //     countArr[debits[i]]++
 //   console.log('    count array after adjustment :', countArr)
 //   console.log('')  
