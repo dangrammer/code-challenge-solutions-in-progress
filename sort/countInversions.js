@@ -65,7 +65,6 @@ function merge(arr, tempArr, beginIdx, mid, endIdx) {
 } 
     
 
-
 ////////// *** SECOND DRAFT *** //////////
 
 // function merge(arr, spanA, spanB) {
