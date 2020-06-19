@@ -25,8 +25,9 @@ function riddle(arr) {
     }
 
     stack.push([arr[i], idx])
-    delete wMaxes['0']
   }
+  
+  delete wMaxes['0']
 
   for (let i in wMaxes) {
     wInver[wMaxes[i]] = Math.max(wInver[wMaxes[i]] || 0, i)
@@ -36,14 +37,16 @@ function riddle(arr) {
   
   for (let i = arr.length - 2; i > 0; i--) {
     if (!wInver[i] || wInver[i] < maxima[maxima.length - 1]) {
-      maxima.unshift(maxima[maxima.length - 1])
+      maxima.push(maxima[maxima.length - 1])
     } else {
-      maxima.unshift(wInver[i])
+      maxima.push(wInver[i])
     } 
-  }     
+  }    
+  
+  const result = maxima.reverse()
     
-  console.log(maxima)
-  return maxima                 
+  console.log(result)
+  return result                 
 }
    
 
