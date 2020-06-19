@@ -1,36 +1,80 @@
 // const arr = [3, 5, 4, 7, 6, 2] // 7 6 4 4 3 2
-const arr = [11, 2, 3, 14, 5, 2, 11, 12] // 14 11 3 2 2 2 2 2
+// const arr = [11, 2, 3, 14, 5, 2, 11, 12] // 14 11 3 2 2 2 2 2
+const arr = [3, 5, 4, 7, 6, 2] // 7 6 4 4 3 2
 riddle(arr)
 
 
-////////// *** THIRD DRAFT *** //////////
+////////// *** FOURTH DRAFT *** //////////
 
 function riddle(arr) {
-  let windowSize = 1
+  const wMaxes = {}
+  const wInver = {}
+  const stack = []
   const maxima = []
-  
-  while (windowSize <= arr.length) {
-    const minima = []
-      
-    for (let i = 0; i <= arr.length - windowSize; i++) {
-      const window = []
-      let endIdx = 0
 
-      while (endIdx < windowSize) {
-        window.push(arr[i + endIdx])
-        endIdx++
-      }
+  arr.push(0)
 
-      minima.push(Math.min(...window))
-    } 
-    
-    maxima.push(Math.max(...minima))
-    windowSize++
+  for (let i = 0; i < arr.length; i++) {
+    let idx = i
+
+    while (stack.length && stack[stack.length - 1][0] >= arr[i]) {
+      let [val,lastIdx] = stack.pop()
+      wMaxes[arr[i]] = Math.max(wMaxes[arr[i]] || 0, i - lastIdx + 1)
+      wMaxes[val] = Math.max(wMaxes[val] || 0, i - lastIdx)
+      idx = lastIdx
+    }
+
+    stack.push([arr[i], idx])
+    delete wMaxes['0']
   }
-      
+
+  for (let i in wMaxes) {
+    wInver[wMaxes[i]] = Math.max(wInver[wMaxes[i]] || 0, i)
+  }  
+
+  maxima.push(wInver[arr.length - 1])                         
+  
+  for (let i = arr.length - 2; i > 0; i--) {
+    if (!wInver[i] || wInver[i] < maxima[maxima.length - 1]) {
+      maxima.unshift(maxima[maxima.length - 1])
+    } else {
+      maxima.unshift(wInver[i])
+    } 
+  }     
+    
   console.log(maxima)
-  return maxima
+  return maxima                 
 }
+   
+
+// ////////// *** THIRD DRAFT *** //////////
+
+// function riddle(arr) {
+//   let windowSize = 1
+//   const maxima = []
+  
+//   while (windowSize <= arr.length) {
+//     const minima = []
+      
+//     for (let i = 0; i <= arr.length - windowSize; i++) {
+//       const window = []
+//       let endIdx = 0
+
+//       while (endIdx < windowSize) {
+//         window.push(arr[i + endIdx])
+//         endIdx++
+//       }
+
+//       minima.push(Math.min(...window))
+//     } 
+
+//     maxima.push(Math.max(...minima))
+//     windowSize++
+//   }
+      
+//   console.log(maxima)
+//   return maxima
+// }
 
 
 ////////// *** SECOND DRAFT *** //////////
