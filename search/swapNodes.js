@@ -1,67 +1,156 @@
-// const indexes = [[2, 3], [-1, -1], [-1 -1]]
-const indexes = [[2, 3], [-1, 4], [6, -1], [7, 5]]
-const queries = [1, 1]
-// swapNodes(indexes, queries)
+// const indexes = [[2, 3], [-1, -1], [-1, -1]]
+// const queries = [1, 1]
+// 3 1 2 
+// 2 1 3
+// const indexes = [[2, 3], [-1, 4], [-1, 5], [-1, -1], [-1, -1]]
+// const queries = [2]
+// 4 2 1 5 3
+const indexes = [
+  [2, 3], 
+  [4, -1], 
+  [5, -1], 
+  [6, -1], 
+  [7, 8], 
+  [-1, 9], 
+  [-1, -1], 
+  [10, 11], 
+  [-1, -1], 
+  [-1, -1], 
+  [-1, -1]
+]
+const queries = [2, 4]
+// 2 9 6 4 1 3 7 5 11 8 10
+// 2 6 9 4 1 3 7 5 10 8 11
+// swapNodes() called at end of second draft to accomodate scope: Class cannot be hoisted
+
+
+////////// *** SECOND DRAFT *** //////////
 
 class Node {
-  constructor(data = -1) {
-    this.data = data
+  constructor(index, depth) {
+    this.index = index
+    this.depth = depth
     this.left = null
     this.right = null
   }
 }
 
-function buildTree(indexes) {
-  const queue = []
-  const root = new Node(1)
-  let i = 0
+const printInOrder = (node, travArr) => {
+  if (!node) return
 
-  root.left = new Node()
-  root.right = new Node()
-
-  queue.push([root.left, root.right])
-
-  while (i < indexes.length) {
-    const [left, right] = indexes[i]
-    const [curLeft, curRight] = queue.shift() 
-
-    curLeft.data = left
-    curRight.data = right
-
-    if (left > -1) {
-      curLeft.left = new Node()
-      curLeft.right = new Node()
-      queue.push([curLeft.left, curLeft.right])
-    }
-    
-
-    if (right > -1) {
-      curRight.left = new Node()
-      curRight.right = new Node()
-      queue.push([curRight.left, curRight.right])
-    }
-
-    i++
-  }
-  return root
+  printInOrder(node.left, travArr)
+  travArr.push(node.index)
+  printInOrder(node.right, travArr)
 }
 
-// function printNodes(root) {
-//   if (root && root.data > -1) {
-//     printNodes(root.left) 
-//     console.log(root.data) 
-//     printNodes(root.right) 
-//   }
-// }
+const swapInOrder = (node, depth, query) => {
+  if (!node) return
 
-// printNodes(buildTree(indexes))
-
-function inOrderTraversal(indexes) {
+  swapInOrder(node.left, depth + 1, query)
+  swapInOrder(node.right, depth + 1, query)
   
+  if (depth % query === 0) // && depth >= query 
+    [node.left, node.right] = [node.right, node.left]
 }
 
 function swapNodes(indexes, queries) {
-  const result = []
+  const resultArr = []
+  const queue = []
+  const root = new Node(1, 1)
+  let curNode = root
+  let i = 0
 
-  return result
+  queue.push(curNode)
+
+  while (i < indexes.length) {
+    const [curLeft, curRight] = indexes[i]
+    
+    curNode = queue.shift()
+    curNode.left = curLeft === -1 ? null : new Node(curLeft, curNode.depth + 1)
+    curNode.right = curRight === -1 ? null : new Node(curRight, curNode.depth + 1)
+
+    if (curNode.left && curNode.left.index !== -1) queue.push(curNode.left)
+    if (curNode.right && curNode.right.index !== -1) queue.push(curNode.right)
+
+    i++
+  }
+
+  for (let i = 0; i < queries.length; i++) {
+    const travArr = []
+
+    swapInOrder(root, 1, queries[i])
+    printInOrder(root, travArr)
+    resultArr.push(travArr)
+  }
+
+  console.log(resultArr)
+  return resultArr
 }
+
+swapNodes(indexes, queries)
+
+
+////////// *** FIRST DRAFT *** //////////
+
+// class Node {
+//   constructor(data = -1) {
+//     this.data = data
+//     this.left = null
+//     this.right = null
+//   }
+// }
+
+// function buildTree(indexes) {
+//   const queue = []
+//   const root = new Node(1)
+//   let i = 0
+
+//   root.left = new Node()
+//   root.right = new Node()
+
+//   queue.push([root.left, root.right])
+
+//   while (i < indexes.length) {
+//     const [left, right] = indexes[i]
+//     const [curLeft, curRight] = queue.shift() 
+
+//     curLeft.data = left
+//     curRight.data = right
+
+//     if (left > -1) {
+//       curLeft.left = new Node()
+//       curLeft.right = new Node()
+//       queue.push([curLeft.left, curLeft.right])
+//     }
+    
+
+//     if (right > -1) {
+//       curRight.left = new Node()
+//       curRight.right = new Node()
+//       queue.push([curRight.left, curRight.right])
+//     }
+
+//     i++
+//   }
+//   return root
+// }
+
+// // function printNodes(root) {
+// //   if (root && root.data > -1) {
+// //     printNodes(root.left) 
+// //     console.log(root.data) 
+// //     printNodes(root.right) 
+// //   }
+// // }
+
+// // printNodes(buildTree(indexes))
+
+// function inOrderTraversal(indexes) {
+  
+// }
+
+// function swapNodes(indexes, queries) {
+//   const result = []
+
+//   return result
+// }
