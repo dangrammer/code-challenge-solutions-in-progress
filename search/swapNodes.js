@@ -49,8 +49,14 @@ const swapInOrder = (node, depth, query) => {
   swapInOrder(node.left, depth + 1, query)
   swapInOrder(node.right, depth + 1, query)
   
-  if (depth % query === 0) // && depth >= query 
+  if (depth % query === 0)
     [node.left, node.right] = [node.right, node.left]
+}
+
+const nextNode = (index, curNode) => {
+  if (index === -1) return null
+
+  return new Node(index, curNode.depth + 1)
 }
 
 function swapNodes(indexes, queries) {
@@ -58,21 +64,18 @@ function swapNodes(indexes, queries) {
   const queue = []
   const root = new Node(1, 1)
   let curNode = root
-  let i = 0
 
   queue.push(curNode)
 
-  while (i < indexes.length) {
+  for (let i = 0; i < indexes.length; i++) {  
     const [curLeft, curRight] = indexes[i]
     
     curNode = queue.shift()
-    curNode.left = curLeft === -1 ? null : new Node(curLeft, curNode.depth + 1)
-    curNode.right = curRight === -1 ? null : new Node(curRight, curNode.depth + 1)
+    curNode.left = nextNode(curLeft, curNode)
+    curNode.right = nextNode(curRight, curNode)
 
-    if (curNode.left && curNode.left.index !== -1) queue.push(curNode.left)
-    if (curNode.right && curNode.right.index !== -1) queue.push(curNode.right)
-
-    i++
+    if (curNode.left) queue.push(curNode.left)
+    if (curNode.right) queue.push(curNode.right)
   }
 
   for (let i = 0; i < queries.length; i++) {
