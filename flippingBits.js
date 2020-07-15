@@ -1,7 +1,7 @@
 // const N = 2147483647 // 2147483648
-const N = 1 // 4294967294
+// const N = 1 // 4294967294
 // const N = 0 // 4294967295
-// const N = 123456 // 4294843839
+const N = 123456 // 4294843839
 flippingBits(N)
 
 
@@ -66,7 +66,7 @@ const flippingBits = n => ~n >>> 0
 //   let result = 0
 
 //   while (N >= 1) {
-//     let rem = N % 2
+//     const rem = N % 2
 //     binary += rem
 //     rem === 1 ?
 //       N = Math.floor(N / 2) :
