@@ -1,4 +1,4 @@
 while read input
   do
-    echo $input | cut -b 2-7
+    echo $input | cut -c 2-7
 done
