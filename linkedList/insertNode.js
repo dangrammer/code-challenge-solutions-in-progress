@@ -1,4 +1,4 @@
-//////////// *** FIRST DRAFT *** ////////////
+//////////// *** THIRD DRAFT *** ////////////
 
 function insertNodeAtPosition(head, data, position) {
   let i = 0
@@ -45,7 +45,7 @@ function insertNodeAtPosition(head, data, position) {
 //   return {data, next: null}
 // }
 
-//////////// *** THIRD DRAFT *** ////////////
+//////////// *** FIRST DRAFT *** ////////////
 
 // function insertNodeAtPosition(head, data, position) {
 //   let i = 0
