@@ -6,34 +6,60 @@ const m = 7
 // result: 4
 maximumSum(a, m)
 
+//////////// *** FOURTH DRAFT *** ////////////
+
+function maximumSum(a, m) {
+  console.log('input arr:', a)
+  console.log('modulo:', m)
+  console.log('')
+  let curSum = 0
+  let maxSum = 0
+  console.log('pre curSum:', curSum)
+  console.log('pre maxSum:', maxSum)
+  console.log('')
+
+  for (let i = 0; i < a.length; i++) {
+    console.log('loop', i + 1)
+    console.log('curEl:', a[i])
+    curSum = curSum + a[i] || 0
+    console.log('new curSum:', curSum)
+    maxSum = Math.max(curSum, maxSum)
+    console.log('new maxSum:', maxSum)
+    console.log('')
+  }
+
+  console.log('result:', maxSum % m)
+  return maxSum
+}
+
 
 
 //////////// *** THIRD DRAFT *** ////////////
 
-function bisect(arr, val) {
-  if (!arr.length) return 0
-  let i
-  for (i = 0; i < arr.length; i++) {
-    if (val < arr[i]) return i
-  }
-  return i
-}
+// function bisect(arr, val) {
+//   if (!arr.length) return 0
+//   let i
+//   for (i = 0; i < arr.length; i++) {
+//     if (val < arr[i]) return i
+//   }
+//   return i
+// }
 
-function maximumSum(a, m) {
-  const sortedPreSums = []
-  let preSum = 0
-  let maxSum = 0
+// function maximumSum(a, m) {
+//   const sortedPreSums = []
+//   let preSum = 0
+//   let maxSum = 0
 
-  for (let i = 0; i < a.length; i++) {
-    preSum = (preSum + a[i]) % m
-    maxSum = Math.max(maxSum, preSum)
-    let j = bisect(a, preSum)
-    if (j < sortedPreSums.length) maxSum = Math.max(maxSum, preSum - sortedPreSums[j] + m)
-    sortedPreSums.splice(j + 1, 0, preSum)  
-  }
+//   for (let i = 0; i < a.length; i++) {
+//     preSum = (preSum + a[i]) % m
+//     maxSum = Math.max(maxSum, preSum)
+//     let j = bisect(a, preSum)
+//     if (j < sortedPreSums.length) maxSum = Math.max(maxSum, preSum - sortedPreSums[j] + m)
+//     sortedPreSums.splice(j + 1, 0, preSum)  
+//   }
 
-  return maxSum
-}
+//   return maxSum
+// }
 
 
 
