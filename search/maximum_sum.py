@@ -8,8 +8,8 @@ def maximum_sum(a, m):
   for i in range(len(a)):
     pre_sum = (pre_sum + a[i]) % m
     max_sum = max(max_sum, pre_sum)
-
     idx = bisect.bisect_right(sorted_pre_sums, pre_sum)
+    
     if idx < len(sorted_pre_sums): 
       max_sum = max(max_sum, pre_sum - sorted_pre_sums[idx] + m)
 
